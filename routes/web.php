@@ -23,7 +23,12 @@ Route::get('/contact', function () {
 
 Route::get('/posts/{id}', function ($id) { //adding parameter
     return 'Blog post ' . $id;
-});
+}) 
+// we don't use it here, because added to RouterServiceProvider.php file
+// -> where ([  //add a contstrait, which will protects to load controller if parameter not a number 
+//     'id' => '[0-9]+' 
+// ]) 
+-> name ('posts.show');
 
 Route::get('/recent-post/{days_ago?}', function ($daysAgo= 20) {
     return 'Posts from '  . $daysAgo . ' days ago';

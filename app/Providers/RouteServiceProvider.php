@@ -47,6 +47,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        Route::pattern('id', '[0-9]+'); //add a contstrait, which will protects to load controller if parameter not a number
     }
 
     /**
