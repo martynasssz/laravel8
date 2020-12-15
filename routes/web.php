@@ -21,3 +21,6 @@ Route::get('/contact', function () {
     return 'contact'; //new route
 })->name('home.contact');
 
+Route::get('/posts/{id}', function ($id) { //adding parameter
+    return 'Blog post ' . $id;
+});
