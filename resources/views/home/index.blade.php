@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <meta charset="UTF-8">
-    <title> Document</title>
+@extends('layouts.app')
 
-<head> 
+@section('title', 'Home page') 
 
-
-</head>
-
-<body>
-    <h1>Hello world </h1>
-</body>
-
-</html>
+@section('content')
+<h1> Hello world! </h1>
+@endsection

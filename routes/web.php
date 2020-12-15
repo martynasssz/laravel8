@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home.index', []);
+    return view('home.index', []); //if we don't pass any data we don't need secod argument array
 })->name('home.index');
 
 Route::get('/contact', function () {
-    return 'contact'; //new route
+    return view('home.contact'); 
 })->name('home.contact');
 
 Route::get('/posts/{id}', function ($id) { //adding parameter
