@@ -12,14 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*************************** use view instead closure**********************/
+// Route::get('/', function () {
+//     return view('home.index', []); //if we don't pass any data we don't need secod argument array
+// })->name('home.index');
 
-Route::get('/', function () {
-    return view('home.index', []); //if we don't pass any data we don't need secod argument array
-})->name('home.index');
+// Route::get('/contact', function () {
+//     return view('home.contact'); 
+// })->name('home.contact');
 
-Route::get('/contact', function () {
-    return view('home.contact'); 
-})->name('home.contact');
+Route::view('/', 'home.index')
+    ->name('home.index');
+Route::view('/contact', 'home.contact')
+    ->name('home.contact');
 
 Route::get('/posts/{id}', function ($id) { //adding parameter
     $post = [
@@ -33,7 +38,7 @@ Route::get('/posts/{id}', function ($id) { //adding parameter
         ]
     ];   
     
-    abort_if(!isset($post[$id]),404); //laravel error helper function
+    abort_if(!isset($post[$id]),404); //laravel error helper function retur 404 error if page not found
     
     return view('posts.show', ['post' => $post[$id]]);
 }) 
