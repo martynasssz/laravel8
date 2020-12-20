@@ -67,39 +67,44 @@ Route::get('/recent-post/{days_ago?}', function ($daysAgo= 20) {
     return 'Posts from '  . $daysAgo . ' days ago';
 });
 
-Route::get('/fun/responses', function() use ($posts) {
-    return response($posts, 201)
-    ->header('content-Type', 'application/json')
-    ->cookie('MY_COOKIE', 'Martin K', 3600); //helper function response will create a new reponse object which have methods header() or cookie()
-    //the responce function acept 3 parameters: all optional. first content return, second status code, array of responce headers  
+//route grouping
+Route::prefix('/fun')->name('fun.')->group(function() use ($posts) {
+
+    Route::get('/responses', function() use ($posts) {
+        return response($posts, 201)
+        ->header('content-Type', 'application/json')
+        ->cookie('MY_COOKIE', 'Martin K', 3600); //helper function response will create a new reponse object which have methods header() or cookie()
+        //the responce function acept 3 parameters: all optional. first content return, second status code, array of responce headers  
+    });
+    
+    //reponse helper function use when needto something extra: to set a header, or a cookie, o change responce status code. 
+    
+    Route::get('/redirect', function(){
+        return redirect('/contact'); //redirect to contact page
+    })->name('redirect');;
+    
+    Route::get('/back', function(){
+        return back();   // back redirect to the last address usefull for one time actions for input storing
+    })->name('back');;
+    
+    Route::get('/named-route', function(){
+        return redirect()->route('posts.show', ['id' => 1]); //redirect to certain page with parameter
+    })->name('named-route');
+    
+    Route::get('/away', function(){
+        return redirect()->away('https://google.com'); //redirect away of page
+    
+    })->name('away');
+    
+    Route::get('/json', function() use ($posts) {
+        return response()->json($posts); //return json response
+    
+    })->name('json');
+    
+    Route::get('/download', function() use ($posts) {
+        return response()->download(public_path('/mvc.png'), 'face.jpg'); //download mvc.phg as face.jpg
+    
+    })->name('download');
 });
 
-//reponse helper function use when needto something extra: to set a header, or a cookie, o change responce status code. 
 
-Route::get('/fun/redirect', function(){
-    return redirect('/contact'); //redirect to contact page
-});
-
-Route::get('/fun/back', function(){
-    return back();   // back redirect to the last address usefull for one time actions for input storing
-});
-
-Route::get('/fun/named-route', function(){
-    return redirect()->route('posts.show', ['id' => 1]); //redirect to certain page with parameter
-
-});
-
-Route::get('/fun/away', function(){
-    return redirect()->away('https://google.com'); //redirect away of page
-
-});
-
-Route::get('/fun/json', function() use ($posts) {
-    return response()->json($posts); //return json response
-
-});
-
-Route::get('/fun/download', function() use ($posts) {
-    return response()->download(public_path('/mvc.png'), 'face.jpg'); //download mvc.phg as face.jpg
-
-});
