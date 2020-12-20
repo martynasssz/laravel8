@@ -85,16 +85,21 @@ Route::get('/fun/back', function(){
 });
 
 Route::get('/fun/named-route', function(){
-    return redirect()->route('posts.show', ['id' => 1]); //rederect to certain page with parameter
+    return redirect()->route('posts.show', ['id' => 1]); //redirect to certain page with parameter
 
 });
 
 Route::get('/fun/away', function(){
-    return redirect()->away('https://google.com'); //riderect away of page
+    return redirect()->away('https://google.com'); //redirect away of page
 
 });
 
 Route::get('/fun/json', function() use ($posts) {
     return response()->json($posts); //return json response
+
+});
+
+Route::get('/fun/download', function() use ($posts) {
+    return response()->download(public_path('/mvc.png'), 'face.jpg'); //download mvc.phg as face.jpg
 
 });
