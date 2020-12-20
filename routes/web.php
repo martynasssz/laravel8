@@ -30,11 +30,13 @@ Route::get('/posts/{id}', function ($id) { //adding parameter
     $post = [
         1 => [
             'title' => 'Intro to Laravel',
-            'content' => 'This is a short intro to Laravel'
+            'content' => 'This is a short intro to Laravel',
+            'is_new' => true //aditional parameter
         ],
         2 => [
             'title' => 'Intro to PHP',
-            'content' => 'This is a short intro to PHP'
+            'content' => 'This is a short intro to PHP',
+            'is_new' => false //aditional parameter
         ]
     ];   
     
