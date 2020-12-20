@@ -37,11 +37,16 @@ Route::view('/contact', 'home.contact')
             'title' => 'Intro to PHP',
             'content' => 'This is a short intro to PHP',
             'is_new' => false //aditional parameter
+        ],
+        3 => [
+            'title' => 'Intro to Golang',
+            'content' => 'This is a short intro to Golang',
+            'is_new' => false //aditional parameter
         ]
     ];
 
 Route::get('/posts', function() use ($posts) {
-    // compact($posts) == ['posts' =>$posts])
+    // compact($posts) === ['posts' =>$posts])
    return view('posts.index', ['posts' => $posts]);
 });    
 
