@@ -66,3 +66,12 @@ Route::get('/posts/{id}', function ($id) use ($posts) { //adding parameter
 Route::get('/recent-post/{days_ago?}', function ($daysAgo= 20) {
     return 'Posts from '  . $daysAgo . ' days ago';
 });
+
+Route::get('/fun/responses', function() use ($posts) {
+    return response($posts, 201)
+    ->header('content-Type', 'application/json')
+    ->cookie('MY_COOKIE', 'Martin K', 3600); //helper function response will create a new reponse object which have methods header() or cookie()
+    //the responce function acept 3 parameters: all optional. first content return, second status code, array of responce headers  
+});
+
+//reponse helper function use when needto something extra: to set a header, or a cookie, o change responce status code. 
