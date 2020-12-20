@@ -75,3 +75,21 @@ Route::get('/fun/responses', function() use ($posts) {
 });
 
 //reponse helper function use when needto something extra: to set a header, or a cookie, o change responce status code. 
+
+Route::get('/fun/redirect', function(){
+    return redirect('/contact'); //redirect to contact page
+});
+
+Route::get('/fun/back', function(){
+    return back();   // back redirect to the last address usefull for one time actions for input storing
+});
+
+Route::get('/fun/named-route', function(){
+    return redirect()->route('posts.show', ['id' => 1]); //rederect to certain page with parameter
+
+});
+
+Route::get('/fun/away', function(){
+    return redirect()->away('https://google.com'); //riderect away of page
+
+});
