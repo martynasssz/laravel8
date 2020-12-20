@@ -26,8 +26,7 @@ Route::view('/', 'home.index')
 Route::view('/contact', 'home.contact')
     ->name('home.contact');
 
-Route::get('/posts/{id}', function ($id) { //adding parameter
-    $post = [
+    $posts = [
         1 => [
             'title' => 'Intro to Laravel',
             'content' => 'This is a short intro to Laravel',
@@ -39,11 +38,19 @@ Route::get('/posts/{id}', function ($id) { //adding parameter
             'content' => 'This is a short intro to PHP',
             'is_new' => false //aditional parameter
         ]
-    ];   
+    ];
+
+Route::get('/posts', function() use ($posts) {
+    // compact($posts) == ['posts' =>$posts])
+   return view('posts.index', ['posts' => $posts]);
+});    
+
+Route::get('/posts/{id}', function ($id) use ($posts) { //adding parameter
+      
     
-    abort_if(!isset($post[$id]),404); //laravel error helper function retur 404 error if page not found
+    abort_if(!isset($posts[$id]),404); //laravel error helper function retur 404 error if page not found
     
-    return view('posts.show', ['post' => $post[$id]]);
+    return view('posts.show', ['post' => $posts[$id]]);
 }) 
 // we don't use it here, because added to RouterServiceProvider.php file
 // -> where ([  //add a contstrait, which will protects to load controller if parameter not a number 
