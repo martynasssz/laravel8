@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -49,26 +50,28 @@ Route::get('/single', AboutController::class); //single action conntroller route
         ]
     ];
 
-Route::get('/posts', function() use ($posts) {
-  //  dd(request()->All()); //after dd gives an array
-  // dd(request()->input('page', 1)); //when no parameter gives 1 as default value//input will look for a name in every possible sources
-  dd(request()->query('page', 1)); //looks for quert parameters only
-    // compact($posts) === ['posts' =>$posts])
-   return view('posts.index', ['posts' => $posts]);
-});    
+Route::resource('posts', PostsController::class)->only(['index', 'show']); //use only two actions   
 
-Route::get('/posts/{id}', function ($id) use ($posts) { //adding parameter
+// Route::get('/posts', function() use ($posts) {
+//   //  dd(request()->All()); //after dd gives an array
+//   // dd(request()->input('page', 1)); //when no parameter gives 1 as default value//input will look for a name in every possible sources
+//   dd(request()->query('page', 1)); //looks for quert parameters only
+//     // compact($posts) === ['posts' =>$posts])
+//    return view('posts.index', ['posts' => $posts]);
+// });    
+
+// Route::get('/posts/{id}', function ($id) use ($posts) { //adding parameter
       
     
-    abort_if(!isset($posts[$id]),404); //laravel error helper function retur 404 error if page not found
+//     abort_if(!isset($posts[$id]),404); //laravel error helper function retur 404 error if page not found
     
-    return view('posts.show', ['post' => $posts[$id]]);
-}) 
-// we don't use it here, because added to RouterServiceProvider.php file
-// -> where ([  //add a contstrait, which will protects to load controller if parameter not a number 
-//     'id' => '[0-9]+' 
-// ]) 
--> name ('posts.show');
+//     return view('posts.show', ['post' => $posts[$id]]);
+// }) 
+// // we don't use it here, because added to RouterServiceProvider.php file
+// // -> where ([  //add a contstrait, which will protects to load controller if parameter not a number 
+// //     'id' => '[0-9]+' 
+// // ]) 
+// -> name ('posts.show');
 
 Route::get('/recent-post/{days_ago?}', function ($daysAgo= 20) {
     return 'Posts from '  . $daysAgo . ' days ago';
