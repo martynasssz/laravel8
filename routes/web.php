@@ -69,7 +69,7 @@ Route::get('/posts/{id}', function ($id) use ($posts) { //adding parameter
 
 Route::get('/recent-post/{days_ago?}', function ($daysAgo= 20) {
     return 'Posts from '  . $daysAgo . ' days ago';
-});
+})->name('posts.recent.index')->middleware('auth'); //if we apply auth middleware, user required to be authenticated, to visit this route
 
 //route grouping
 Route::prefix('/fun')->name('fun.')->group(function() use ($posts) {
