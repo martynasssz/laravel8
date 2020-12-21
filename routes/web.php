@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,9 @@ Route::view('/contact', 'home.contact')
     ];
 
 Route::get('/posts', function() use ($posts) {
+  //  dd(request()->All()); //after dd gives an array
+  // dd(request()->input('page', 1)); //when no parameter gives 1 as default value//input will look for a name in every possible sources
+  dd(request()->query('page', 1)); //looks for quert parameters only
     // compact($posts) === ['posts' =>$posts])
    return view('posts.index', ['posts' => $posts]);
 });    
