@@ -50,7 +50,8 @@ Route::get('/single', AboutController::class); //single action conntroller route
         ]
     ];
 
-Route::resource('posts', PostsController::class)->only(['index', 'show']); //use only two actions   
+Route::resource('posts', PostsController::class)
+    ->only(['index', 'show', 'create', 'store']);  
 
 // Route::get('/posts', function() use ($posts) {
 //   //  dd(request()->All()); //after dd gives an array
