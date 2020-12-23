@@ -6,12 +6,13 @@
 
 <form action="{{ route('posts.store') }}" method="POST">
     @csrf
-    <div><input type="text" name="title"></div>
+    {{-- value="'{{ old('title') }} use for keeping value in form field after showing errors --}}
+    <div><input type="text" name="title" value="{{ old('title') }}"></div>
     {{-- error message only for title --}}
     @error('title') 
         <div>{{ $message }}</div>
     @enderror
-    <div><textarea name ="content"></textarea></div>
+    <div><textarea name ="content">{{ old('content') }}</textarea></div>
     {{-- errors massages for all fields --}}
     @if($errors->any())
         <div>
