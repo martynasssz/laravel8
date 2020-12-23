@@ -11,6 +11,12 @@
 
 <body>
     <div>
+        @if(session('status'))
+            <div style="background: red; color: white">
+                {{ session('status') }}
+            </div>
+        @endif
+
         @yield('content')
     </div>
 </body>
