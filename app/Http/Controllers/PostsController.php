@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -34,17 +35,13 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        $request->validate([
-            //we use bail to prefair the first error to stop the rest of the roles for a faileld from  running at the bala rule to the least
-            'title' =>'bail|required|min:5|max:100', //length of title min 5 max 100 letters
-            'content' => 'required|min:10'
-        ]);
+        $validated = $request->validated();//validation array removed to StorePost.php
         
         $post = new BlogPost();
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        $post->title =  $validated['title']; //$request->input('title'); read straight from validation  
+        $post->content = $validated['content']; // $request->input('content'); read straight from validation
         $post->save();
 
         return redirect()->route('posts.show', ['post' => $post->id]);
