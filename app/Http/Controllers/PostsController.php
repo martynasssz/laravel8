@@ -37,7 +37,7 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            //we use bail to prefair the first error to stop the rest of the roles for a fileld from  running at the bala rule to the least
+            //we use bail to prefair the first error to stop the rest of the roles for a faileld from  running at the bala rule to the least
             'title' =>'bail|required|min:5|max:100', //length of title min 5 max 100 letters
             'content' => 'required|min:10'
         ]);
