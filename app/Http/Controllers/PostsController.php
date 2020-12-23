@@ -83,9 +83,17 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePost $request, $id)
     {
-        //
+        $post = BlogPost::findOrFail($id);//asign $post the resul findOrFail if the blogpost with given id not exists
+        $validated = $request->validated(); //retun array with validated data
+        $post->fill($validated); //explained in mass assign lecture
+        $post->save();
+
+        $request->session()->flash('status', 'Blog post was updated!');
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
+    
     }
 
     /**
