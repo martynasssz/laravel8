@@ -39,10 +39,13 @@ class PostsController extends Controller
     {
         $validated = $request->validated();//validation array removed to StorePost.php
         
+        /*
         $post = new BlogPost();
         $post->title =  $validated['title']; //$request->input('title'); read straight from validation  
         $post->content = $validated['content']; // $request->input('content'); read straight from validation
         $post->save();
+        */
+        $post = BlogPost::create($validated); //insteat 4 column use one create method from Model BlogPost
 
         $request->session()->flash('status', 'The blog post was created!');
 
