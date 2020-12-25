@@ -4,8 +4,9 @@
 <head> 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}" defer > </script>
+    {{-- asset replaced to mix, because webpack.mix.js created such method --}}
+    <link rel="stylesheet" href="{{mix('css/app.css') }}"> 
+    <script src="{{mix('js/app.js') }}" defer></script>
     <title> Laravel App - @yield('title')</title>   
 
 </head>
