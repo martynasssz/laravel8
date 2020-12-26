@@ -47,10 +47,27 @@ class PostTest extends TestCase
 
         $this->post('/posts', $params)
             ->assertStatus(302) //302 status for successfull redirection
-            ->assertSessionHas('status');
+            ->assertSessionHas('status'); //stastus session variable
 
-        $this->assertEquals(session('status'), 'The blog post was created!');    
-
+        $this->assertEquals(session('status'), 'The blog post was created!');   
     }
+
+    public function testStoreFail()
+    {
+        $params = [
+            'title' =>'x',
+            'content' => 'x'
+        ];
+
+        $this->post('/posts', $params)
+            ->assertStatus(302) //302 status for successfull redirection
+            ->assertSessionHas('errors');  //errors session variable
+
+        $messages = session('errors')->getMessages();        
+        
+        $this->assertEquals($messages['title'][0],'The title must be at least 5 characters.' );
+        $this->assertEquals($messages['content'][0],'The content must be at least 10 characters.' );
+    }    
+
 
 }
