@@ -67,7 +67,37 @@ class PostTest extends TestCase
         
         $this->assertEquals($messages['title'][0],'The title must be at least 5 characters.' );
         $this->assertEquals($messages['content'][0],'The content must be at least 10 characters.' );
-    }    
+    } 
+    
+    public function testUpdateValid()
+    {
+        $post = new BlogPost(); //use App\Models\BlogPost added
+        $post->title = 'New title';
+        $post->content = 'Content of blog post';
+        $post->save();
 
+        //doen't work with toArray()
+        //$this->assertDatabaseHas('blog_posts', $post->toArray());//toArray() convert all the attributes (columns) of blogPost instance to array and we can find exactly all the columns that BlogPost instance can have 
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => 'New title'
+        ]);
+               
+        $params = [
+            'title' =>'A new named title.',
+            'content' => 'Content was chanded.'
+        ];
 
+        $this->put("/posts/{$post->id}", $params)
+            ->assertStatus(302) //302 status for successfull redirection
+            ->assertSessionHas('status');  
+
+            $this->assertEquals(session('status'), 'Blog post was updated!');                 
+
+            $this->assertDatabaseMissing('blog_posts', $post->toArray()); 
+            
+            $this->assertDatabaseHas('blog_posts', [
+                'title' => 'A new named title.'
+            ]);
+
+    }
 }
