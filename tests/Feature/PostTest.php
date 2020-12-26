@@ -21,10 +21,11 @@ class PostTest extends TestCase
     public function testSee1BlogPostWhenThereIs1()
     {
         //Arrange (preparation data for testing, saving a new model inside database)
-        $post = new BlogPost(); //use App\Models\BlogPost added
-        $post->title = 'New title';
-        $post->content = 'Content of blog post';
-        $post->save();
+        // $post = new BlogPost(); //use App\Models\BlogPost added
+        // $post->title = 'New title';
+        // $post->content = 'Content of blog post';
+        // $post->save();
+        $post=$this->createDummyBlogPost();
 
         //Act
         $response = $this->get('/posts');
@@ -71,10 +72,11 @@ class PostTest extends TestCase
     
     public function testUpdateValid()
     {
-        $post = new BlogPost(); //use App\Models\BlogPost added
-        $post->title = 'New title';
-        $post->content = 'Content of blog post';
-        $post->save();
+        // $post = new BlogPost(); //use App\Models\BlogPost added
+        // $post->title = 'New title';
+        // $post->content = 'Content of blog post';
+        // $post->save();
+        $post=$this->createDummyBlogPost();
 
         //doen't work with toArray()
         //$this->assertDatabaseHas('blog_posts', $post->toArray());//toArray() convert all the attributes (columns) of blogPost instance to array and we can find exactly all the columns that BlogPost instance can have 
@@ -98,6 +100,33 @@ class PostTest extends TestCase
             $this->assertDatabaseHas('blog_posts', [
                 'title' => 'A new named title.'
             ]);
-
     }
+
+    public function testDelete()
+    {
+        $post=$this->createDummyBlogPost();
+        //$this->assertDatabaseHas('blog_posts', $post->toArray()); //doesn't work
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => 'New title'
+        ]);
+
+        $this->delete("/posts/{$post->id}")
+            ->assertStatus(302) //302 status for successfull redirection
+            ->assertSessionHas('status'); 
+        
+        $this->assertEquals(session('status'), 'Blog post was deleted!'); 
+        $this->assertDatabaseMissing('blog_posts', $post->toArray());
+        
+    }   
+
+    private function createDummyBlogPost(): BlogPost
+    {
+        $post = new BlogPost(); //use App\Models\BlogPost added
+        $post->title = 'New title';
+        $post->content = 'Content of blog post';
+        $post->save();
+
+        return $post;
+    }    
+
 }
