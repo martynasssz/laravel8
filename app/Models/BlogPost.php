@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class BlogPost extends Model
 {
     protected $fillable =['title', 'content']; //mass asign
-    
-    
+       
     use HasFactory;
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
