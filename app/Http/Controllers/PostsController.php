@@ -29,7 +29,10 @@ class PostsController extends Controller
 
         // dd(DB::getQueryLog());
 
-        return view('posts.index', ['posts' => BlogPost::all()]);
+        // comment_count numbers of related comments
+        return view('posts.index',
+         ['posts' => BlogPost::withCount('comments')->get()]
+        );
 
     }
 

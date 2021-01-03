@@ -32,6 +32,7 @@ class PostTest extends TestCase
 
         //Assert 
         $response->assertSeeText('New title');
+        $response->assertSeeText('No comments yet!');
 
         //chech if there is a record with specific atribute in database
         $this->assertDatabaseHas('blog_posts', [
